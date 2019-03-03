@@ -1,0 +1,46 @@
+///////////////////////////////////////////////////////////////////
+//use checkbox with onEdit to dynamiclly supercharge your sheets.//
+//////////////////////////made by William//////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+function onEdit(e){
+  
+  //get the "range" of the cell changed i.e. checkbox
+  var checkBox = e.range;
+  
+  //column of cell
+  var col = checkBox.getColumn();
+  
+  //row of cell
+  var row = checkBox.getRow();
+  
+  //this limits what range can trigger the onEdit event
+  if(col == 6 && row > 2 ){
+  
+    //define invetoryCell
+    var inventoryCell = e.source.getSheets()[0].getRange(row,col-1);
+  
+    //get the value from inventoryCell 
+    var inventoryCount = inventoryCell.getValue() ;
+       
+    //this prevents inventoryCount going negitive
+    if (inventoryCount > 0){
+  
+      //subtract 1 from the inventory and set new total to inventoryCell
+      inventoryCell.setValue(inventoryCount-1);
+  
+      //define countCell
+      var countCell = e.source.getSheets()[0].getRange(row,col+1);
+    
+      //get the value from countCell
+      var count = countCell.getValue() ;
+    
+      //adds one to the count and sets new value to countCell
+      countCell.setValue(count+1);
+      
+    }
+  //set checkbox back to false
+  checkBox.setValue("FALSE");
+  }
+}
